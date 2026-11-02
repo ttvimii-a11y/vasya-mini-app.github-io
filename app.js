@@ -38,8 +38,6 @@ const icon = (name) => `<svg aria-hidden="true"><use href="#i-${name}" /></svg>`
 
 /* ---------------- api ---------------- */
 
-const initData = tg?.initData ?? "";
-
 async function api(path, body) {
   let response;
   try {
@@ -47,7 +45,6 @@ async function api(path, body) {
       method: body === undefined ? "GET" : "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Telegram-Init-Data": initData,
       },
       body: body === undefined ? undefined : JSON.stringify(body),
     });
@@ -1094,7 +1091,7 @@ async function boot() {
       <div class="fatal">
         ${icon("user")}
         <div class="fatal-title">${err.message}</div>
-        <div class="fatal-sub">Открой приложение из Telegram-бота.<br />Данные проверяются по подписи initData.</div>
+        <div class="fatal-sub">Проверь подключение к серверу и попробуйте ещё раз.</div>
       </div>
     `;
   }
