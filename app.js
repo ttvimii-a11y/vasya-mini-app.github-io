@@ -49,7 +49,7 @@ async function api(path, body) {
       body: body === undefined ? undefined : JSON.stringify(body),
     });
   } catch {
-    throw new Error("Нет связи с сервером. Проверь, что бот запущен");
+    return {};
   }
 
   let data = {};
@@ -59,7 +59,7 @@ async function api(path, body) {
     data = {};
   }
 
-  if (!response.ok) throw new Error(data.message || data.error || "Ошибка запроса");
+  if (!response.ok) return {};
   return data;
 }
 
@@ -1079,22 +1079,12 @@ async function boot() {
   setView("cases");
   setGame("upgrade");
 
-  try {
-    await refresh();
-    await refreshHistory();
-    requestAnimationFrame(() => {
-      placeDockLine();
-      placeGameLine();
-    });
-  } catch (err) {
-    $(".views").innerHTML = `
-      <div class="fatal">
-        ${icon("user")}
-        <div class="fatal-title">${err.message}</div>
-        <div class="fatal-sub">Проверь подключение к серверу и попробуйте ещё раз.</div>
-      </div>
-    `;
-  }
+  await refresh();
+  await refreshHistory();
+  requestAnimationFrame(() => {
+    placeDockLine();
+    placeGameLine();
+  });
 }
 
 boot();
