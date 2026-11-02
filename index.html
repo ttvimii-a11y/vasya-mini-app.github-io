@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#0a0b0d" />
+    <title>VasyaUP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20251112" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body>
+    <svg class="sprite" aria-hidden="true" focusable="false">
+      <symbol id="i-star" viewBox="0 0 24 24">
+        <path d="M12 3.2l1.86 5.34L19 10.4l-5.14 1.86L12 17.6l-1.86-5.34L5 10.4l5.14-1.86L12 3.2z" />
+      </symbol>
+      <symbol id="i-box" viewBox="0 0 24 24">
+        <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" />
+        <path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" />
+      </symbol>
+      <symbol id="i-bolt" viewBox="0 0 24 24">
+        <path d="M13 2.8L5.2 13.4h5.4L10.4 21.2 18.8 10.2h-5.6L13 2.8z" />
+      </symbol>
+      <symbol id="i-stack" viewBox="0 0 24 24">
+        <path d="M12 3l9 4.8-9 4.8-9-4.8L12 3z" />
+        <path d="M3 12.2l9 4.8 9-4.8" />
+        <path d="M3 16.6l9 4.8 9-4.8" />
+      </symbol>
+      <symbol id="i-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8.2" r="3.6" />
+        <path d="M4.8 20.4c.5-3.6 3.4-5.6 7.2-5.6s6.7 2 7.2 5.6" />
+      </symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24">
+        <path d="M9 5.5l6.5 6.5L9 18.5" />
+      </symbol>
+      <symbol id="i-close" viewBox="0 0 24 24">
+        <path d="M6.5 6.5l11 11M17.5 6.5l-11 11" />
+      </symbol>
+      <symbol id="i-rocket" viewBox="0 0 24 24">
+        <path d="M13.6 3.6c3.2 0 6.8 3.6 6.8 6.8 0 0-4.2.6-7.2 3.6l-3.2-3.2c3-3 3.6-7.2 3.6-7.2z" />
+        <path d="M9.6 13.8L6 17.4" />
+        <path d="M8.2 15.4l-3.1.9.9-3.1" />
+        <path d="M15 12l-3-3" />
+        <path d="M7.4 18.2c-.6 1-.9 2.1-.9 3.1 1 0 2.1-.3 3.1-.9" />
+      </symbol>
+      <symbol id="i-bag" viewBox="0 0 24 24">
+        <path d="M6 8h12l1.2 12H4.8L6 8z" />
+        <path d="M9.2 8V6.6a2.8 2.8 0 015.6 0V8" />
+      </symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24">
+        <path d="M20 12a8 8 0 11-2.6-5.9" />
+        <path d="M20 4.5V9h-4.5" />
+      </symbol>
+    </svg>
+
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-copy">
+            <span class="brand-name">VasyaUP</span>
+          </div>
+        </div>
+        <div class="balance" id="balance-chip">
+          <svg class="balance-star" aria-hidden="true"><use href="#i-star" /></svg>
+          <span class="balance-value" id="balance" data-balance>0</span>
+        </div>
+      </header>
+
+      <main class="views" id="views">
+        <!-- КЕЙСЫ -->
+        <section class="view is-active" data-view="cases">
+          <div class="view-head reveal" style="--i: 0">
+            <h1>Кейсы</h1>
+            <p class="view-sub">Открывай, продавай, выводи</p>
+          </div>
+
+          <div class="feature reveal" id="free-card" style="--i: 1"></div>
+
+          <div class="list-head reveal" style="--i: 2">
+            <h2>Коллекции</h2>
+            <span class="list-note" id="cases-note"></span>
+          </div>
+
+          <div class="case-list" id="case-list"></div>
+        </section>
+
+        <!-- ИГРЫ -->
+        <section class="view" data-view="games">
+          <div class="view-head reveal" style="--i: 0">
+            <h1>Игры</h1>
+            <p class="view-sub">Ставки со звёздами</p>
+          </div>
+
+          <div class="segmented reveal" id="game-tabs" style="--i: 1">
+            <span class="segmented-line" id="game-line"></span>
+            <button class="seg-btn is-active" data-game="upgrade">Апгрейд</button>
+            <button class="seg-btn" data-game="rocket">Ракетка</button>
+          </div>
+
+          <div class="game-panel is-active" data-game-panel="upgrade">
+            <div class="play-card">
+              <div class="up-wheel" id="up-wheel" style="--chance: 47.5">
+                <div class="wheel-face" id="up-face">
+                  <div class="wheel-disc" id="up-disc" aria-hidden="true"></div>
+                  <div class="wheel-gloss" aria-hidden="true"></div>
+                  <div class="wheel-needle" id="up-needle" aria-hidden="true"></div>
+                  <div class="wheel-core">
+                    <span class="wheel-label">Множитель</span>
+                    <span class="wheel-mult" id="up-mult">x2.00</span>
+                    <span class="wheel-odds" id="up-odds">Шанс 47.5%</span>
+                  </div>
+                </div>
+                <div class="wheel-legend">
+                  <span><i class="legend-dot legend-dot--win"></i>Заход</span>
+                  <span><i class="legend-dot legend-dot--lose"></i>Не заход</span>
+                </div>
+              </div>
+
+              <div class="bet-block">
+                <div class="bet-top">
+                  <label class="field-label" for="up-bet">Ставка</label>
+                  <button class="link" data-quick="up" data-value="max">Максимум</button>
+                </div>
+                <div class="bet-row">
+                  <div class="input-wrap">
+                    <svg aria-hidden="true"><use href="#i-star" /></svg>
+                    <input
+                      id="up-bet"
+                      class="bet-input"
+                      type="number"
+                      inputmode="numeric"
+                      min="1"
+                      step="1"
+                      value="10"
+                    />
+                  </div>
+                  <button class="chip" data-quick="up" data-value="25">25</button>
+                  <button class="chip" data-quick="up" data-value="100">100</button>
+                  <button class="chip" data-quick="up" data-value="500">500</button>
+                </div>
+              </div>
+
+              <div class="target-grid" id="up-targets"></div>
+
+              <div class="payout-line">
+                <span>Выигрыш</span>
+                <strong id="up-payout">20 Stars</strong>
+              </div>
+
+              <button class="btn btn-primary btn-lg" id="up-go" data-action="upgrade">
+                Играть
+              </button>
+            </div>
+          </div>
+
+          <div class="game-panel" data-game-panel="rocket">
+            <div class="play-card">
+              <div class="rocket-stage" id="rocket-stage">
+                <svg class="rocket-chart" viewBox="0 0 320 150" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#e7c67f" stop-opacity="0.22" />
+                      <stop offset="100%" stop-color="#e7c67f" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path class="chart-area" id="rocket-area" d="" fill="url(#chartFill)" />
+                  <path class="chart-line" id="rocket-path" d="" />
+                  <circle class="chart-dot" id="rocket-dot" cx="0" cy="150" r="3" />
+                </svg>
+                <div class="rocket-readout">
+                  <span class="mult-value" id="rocket-mult">x1.00</span>
+                  <span class="rocket-status" id="rocket-status">Готов к запуску</span>
+                </div>
+              </div>
+
+              <div class="bet-block">
+                <div class="bet-top">
+                  <label class="field-label" for="rocket-bet">Ставка</label>
+                  <button class="link" data-quick="rocket" data-value="max">Максимум</button>
+                </div>
+                <div class="bet-row">
+                  <div class="input-wrap">
+                    <svg aria-hidden="true"><use href="#i-star" /></svg>
+                    <input
+                      id="rocket-bet"
+                      class="bet-input"
+                      type="number"
+                      inputmode="numeric"
+                      min="1"
+                      step="1"
+                      value="10"
+                    />
+                  </div>
+                  <button class="chip" data-quick="rocket" data-value="25">25</button>
+                  <button class="chip" data-quick="rocket" data-value="100">100</button>
+                  <button class="chip" data-quick="rocket" data-value="500">500</button>
+                </div>
+              </div>
+
+              <div class="payout-line">
+                <span>Забрать сейчас</span>
+                <strong id="rocket-cash">0 Stars</strong>
+              </div>
+
+              <button class="btn btn-primary btn-lg" id="rocket-start" data-action="rocket-start">
+                Запустить
+              </button>
+              <button class="btn btn-win btn-lg hidden" id="rocket-cashout" data-action="rocket-cashout">
+                Забрать
+              </button>
+
+              <div class="history" id="rocket-history"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ИНВЕНТАРЬ -->
+        <section class="view" data-view="inventory">
+          <div class="view-head reveal" style="--i: 0">
+            <h1>Инвентарь</h1>
+            <p class="view-sub" id="inv-sub">Предметы из кейсов</p>
+          </div>
+          <div class="inv-list" id="inventory"></div>
+        </section>
+
+        <!-- ПРОФИЛЬ -->
+        <section class="view" data-view="profile">
+          <div class="profile-head reveal" style="--i: 0">
+            <div class="avatar" id="avatar">V</div>
+            <div class="profile-copy">
+              <h1 id="profile-name">VasyaUP</h1>
+              <p id="profile-handle">Telegram</p>
+            </div>
+          </div>
+
+          <div class="stat-grid reveal" style="--i: 1">
+            <div class="stat">
+              <span class="stat-label">Баланс</span>
+              <span class="stat-value" id="stat-balance" data-balance>0</span>
+              <span class="stat-unit">Stars</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Предметы</span>
+              <span class="stat-value" id="stat-items">0</span>
+              <span class="stat-unit">в коллекции</span>
+            </div>
+          </div>
+
+          <div class="panel reveal" style="--i: 2">
+            <div class="row">
+              <span>Бесплатный кейс</span>
+              <span class="row-value" id="profile-free">Доступен</span>
+            </div>
+            <div class="row">
+              <span>Минимальная ставка</span>
+              <span class="row-value" id="profile-min">1</span>
+            </div>
+            <div class="row">
+              <span>Максимальная ставка</span>
+              <span class="row-value" id="profile-max">10000</span>
+            </div>
+            <div class="row">
+              <span>Telegram ID</span>
+              <span class="row-value mono" id="profile-id">—</span>
+            </div>
+          </div>
+
+          <div class="profile-actions reveal" style="--i: 3">
+            <button class="btn btn-primary" id="deposit-btn">Пополнить звёзды</button>
+            <button class="btn btn-ghost" id="refresh-btn">
+              <svg aria-hidden="true"><use href="#i-refresh" /></svg>
+              Обновить данные
+            </button>
+          </div>
+
+          <p class="footnote">VasyaUP · Mini App</p>
+        </section>
+      </main>
+
+      <nav class="dock" id="dock">
+        <span class="dock-line" id="dock-line"></span>
+        <button class="dock-btn is-active" data-view-btn="cases">
+          <svg aria-hidden="true"><use href="#i-box" /></svg>
+          <span>Кейсы</span>
+        </button>
+        <button class="dock-btn" data-view-btn="games">
+          <svg aria-hidden="true"><use href="#i-bolt" /></svg>
+          <span>Игры</span>
+        </button>
+        <button class="dock-btn" data-view-btn="inventory">
+          <svg aria-hidden="true"><use href="#i-stack" /></svg>
+          <span>Инвентарь</span>
+        </button>
+        <button class="dock-btn" data-view-btn="profile">
+          <svg aria-hidden="true"><use href="#i-user" /></svg>
+          <span>Профиль</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Открытие кейса -->
+    <div class="opener" id="opener" aria-hidden="true">
+      <div class="opener-inner">
+        <div class="opener-top">
+          <span class="opener-kicker" id="opener-kicker">Открытие</span>
+          <h2 class="opener-title" id="opener-title">Кейс</h2>
+        </div>
+
+        <div class="reel" id="reel-wrap">
+          <div class="reel-fade reel-fade--left"></div>
+          <div class="reel-fade reel-fade--right"></div>
+          <div class="reel-marker"></div>
+          <div class="reel-track" id="reel-track"></div>
+        </div>
+
+        <div class="opener-result" id="opener-result"></div>
+      </div>
+    </div>
+
+    <!-- Результат игры -->
+    <div class="sheet" id="sheet" aria-hidden="true">
+      <div class="sheet-card" id="sheet-card"></div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script type="module" src="./app.js?v=20251112"></script>
+  </body>
+</html>
+
+
+
